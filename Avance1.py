@@ -32,7 +32,18 @@ else:
     
 
 new_matrix = np.reshape(new_matrix,(row,3))
+#Transponemos la matriz para poder realizar la multiplicacion de nuestra key matrix por new_matrix
+matrix_Tr = new_matrix.T
+#Multiplicamos
+tot_m = k_m @ matrix_Tr
+print (tot_m)
 
-print (new_matrix)
+#Obtenemos el modulo de cada uno de los elementos, en este aso 58 es nuestro modulo ya que es el ultimo elemento de nuestro code
+modulo = np.mod(tot_m,58)
+print (modulo)
+#transponemos nuestra matriz para regresarla a su estado original
+matrix_o = modulo.T
+print(matrix_o)
 
+#Asginamos valores a 
 
