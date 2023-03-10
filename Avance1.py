@@ -12,38 +12,41 @@ message = input('Inserte mensaje a encriptar\n')
 #Volvemos en minuscula el mensaje debido a que nuestra lista (slave_char) esta completamente en minuscula
 new_message = message.lower()
 #Bucle for para guardar los indices en una lista 
-array_index  = []
-array_charc  = []
-list_message = list(new_message)
-
-for i in range(len(new_message)):
-    array_index.append(i)
-    
+cd = []
+for l in new_message:
+    for i in range(len(slave_char)):
+        if l == slave_char[i]:
+            cd.append(code[i])
+            
 #Convertirmos lista a matriz (obtenemos la longitud de la lista)
-length  = len(array_index)
-row     = math.ceil(length/3)
-newA = []
+length  = len(cd)
+row     = math.ceil(length/3)  
+
 if length < 3*row:
         for i in range(3*row-length):
-            array_index.append(43)
-            new_matrix = np.asarray(array_index)
+            cd.append(43)
+            new_matrix = np.asarray(cd)
 else:
-            new_matrix = np.asarray(array_index)
-    
-
+            new_matrix = np.asarray(cd)
+            
 new_matrix = np.reshape(new_matrix,(row,3))
-#Transponemos la matriz para poder realizar la multiplicacion de nuestra key matrix por new_matrix
+#Transponemos la matriz
 matrix_Tr = new_matrix.T
-#Multiplicamos
-tot_m = k_m @ matrix_Tr
-print (tot_m)
 
+#multiplicamos la key matrix por la matriz resultante
+mult = k_m @ matrix_Tr
+#transponemos nuevamente la matriz
+new_tr = mult.T
 #Obtenemos el modulo de cada uno de los elementos, en este aso 58 es nuestro modulo ya que es el ultimo elemento de nuestro code
-modulo = np.mod(tot_m,58)
-print (modulo)
-#transponemos nuestra matriz para regresarla a su estado original
-matrix_o = modulo.T
-print(matrix_o)
+modulo = np.mod(new_tr,58)
+#convertimos a lista el modulo
+new_list = modulo.flatten().tolist()
+#recorremos la nueva lista y asignamos las letras correspondientes a las letras
+encryption =[]
+for l in new_list:
+    for i in range(len(code)):
+        if l == code[i]:
+            encryption.append(slave_char[i]) 
 
-#Asginamos valores a 
+print (encryption)
 
